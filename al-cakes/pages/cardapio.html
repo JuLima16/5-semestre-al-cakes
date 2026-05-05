@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!-- A&L Cakes - Cardápio: lista todos os produtos -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardápio - A&L Cakes</title>
+  <meta name="description" content="Conheça nosso cardápio completo de bolos, tortas, macarons, brigadeiros e doces artesanais." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <header class="navbar">
+    <div class="nav-container">
+      <img src="../images/teste.png" alt="" style="width: 4.5%; border-radius: 50%;">
+      <a href="../index.html" class="logo">A&L<span> Cakes</span></a>
+      <button class="hamburguer" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="cardapio.html">Cardápio</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="admin.html">Admin</a></li>
+          <li><a href="login.html" class="btn-login">Entrar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== CARDÁPIO ===== -->
+  <main class="container">
+    <h1 class="titulo-secao">Nosso Cardápio</h1>
+    <p class="subtitulo-secao">Escolha seu próximo doce favorito</p>
+
+    <!-- Grade de produtos (renderizada via JS) -->
+    <div class="produtos-grid" id="grid-produtos"></div>
+  </main>
+
+  <!-- ===== RODAPÉ ===== -->
+  <footer class="rodape">
+    <div class="rodape-grid">
+      <div>
+        <h4>A&L Cakes</h4>
+        <p>Confeitaria artesanal feita com amor e ingredientes selecionados.</p>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <p>📍 Rua Pascoal Ranieri Mazzilli, 362</p>
+        <p>📞 (11) 96321-6219</p>
+      </div>
+      <div>
+        <h4>Atendimento</h4>
+        <p>Ter a Sáb: 11h às 18h</p>
+        <p>Domingo: sob encomenda</p>
+      </div>
+      <div>
+        <h4>Redes Sociais</h4>
+        <div class="redes">
+          <a href="https://api.whatsapp.com/message/LTZW3MOYNS5GJ1?autoload=1&app_absent=0&utm_source=ig" target="_blank" aria-label="WhatsApp">📱</a>
+          <a href="https://www.instagram.com/a.l_cakescia/" aria-label="Instagram">📷</a>
+
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 A&L Cakes. Todos os direitos reservados. Projeto acadêmico.
+    </div>
+  </footer>
+
+  <script src="../js/produtos.js"></script>
+  <script src="../js/script.js"></script>
+</body>
+</html>
