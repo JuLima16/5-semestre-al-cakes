@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!-- A&L Cakes - Painel admin: CRUD completo de produtos -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Gerenciar Produtos - A&L Cakes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* Estilos da Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+    .modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-close {
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    
+    /* Tabela de produtos */
+    .tabela-produtos {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    .tabela-produtos th,
+    .tabela-produtos td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .tabela-produtos th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+    }
+    .tabela-produtos img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .btn-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-editar {
+      background-color: #ffc107;
+      color: #333;
+    }
+    .btn-deletar {
+      background-color: #dc3545;
+      color: white;
+    }
+    .btn-novo {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  
+  <header class="navbar">
+    <div class="nav-container">
+      <img src="../images/teste.png" alt="" style="width: 4.5%; border-radius: 50%;">
+      <a href="../index.html" class="logo">A&L<span> Cakes</span></a>
+      <button class="hamburguer" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="cardapio.html">Cardápio</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="cadastroBolos.html">Admin</a></li>
+          <li><a href="login.html" class="btn-login">Entrar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <main>
+    <div class="form-container largo">
+      <h2>Painel Administrativo</h2>
+      <p class="subtitulo">Gerenciar Produtos</p>
+      
+      <button class="btn btn-novo" id="btn-novo-produto">+ Novo Produto</button>
+      
+      <!-- Tabela de listagem -->
+      <table class="tabela-produtos">
+        <thead>
+          <tr>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="lista-produtos">
+          <!-- Produtos serão inseridos aqui via JS -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+  
+  <!-- Modal de Cadastro/Edição -->
+  <div id="modal-produto" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-titulo">Cadastrar Produto</h3>
+        <button class="modal-close" id="btn-fechar-modal">&times;</button>
+      </div>
+      
+      <form id="form-produto" novalidate>
+        <input type="hidden" id="produto-id" />
+        
+        <div class="campo">
+          <label for="nome">Nome do produto</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex: Bolo de cenoura" required />
+        </div>
+        
+        <div class="campo">
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" placeholder="Descreva o produto..." required></textarea>
+        </div>
+        
+        <div class="campo">
+          <label for="estoque">Estoque</label>
+          <input type="number" id="estoque" name="estoque" min="0" placeholder="0" required />
+        </div>
+        
+        <div class="campo">
+          <label for="preco">Preço (R$)</label>
+          <input type="number" id="preco" name="preco" step="0.01" min="0" placeholder="49.90" required />
+        </div>
+        
+        <div class="campo">
+          <label for="imagem">URL da imagem</label>
+          <input type="url" id="imagem" name="imagem" placeholder="https://..." />
+        </div>
+        
+        <button type="button" class="btn" id="btn-salvar-produto">Salvar Produto</button>
+      </form>
+    </div>
+  </div>
+  
+  <footer class="rodape">
+    <div class="copyright">
+      © 2026 A&L Cakes. Todos os direitos reservados. Projeto acadêmico.
+    </div>
+  </footer>
+  
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="../js/controller.js"></script>
+  <script>
+    let modoEdicao = false;
+    let idEdicao = null;
+    
+    // Carregar produtos ao iniciar
+    $(document).ready(function() {
+      carregarProdutos();
+    });
+    
+    // Abrir modal para novo produto
+    $('#btn-novo-produto').click(function() {
+      modoEdicao = false;
+      idEdicao = null;
+      $('#modal-titulo').text('Cadastrar Produto');
+      $('#form-produto')[0].reset();
+      $('#produto-id').val('');
+      $('#modal-produto').addClass('show');
+    });
+    
+    // Fechar modal
+    $('#btn-fechar-modal').click(function() {
+      $('#modal-produto').removeClass('show');
+    });
+    
+    // Fechar modal clicando fora
+    $('#modal-produto').click(function(e) {
+      if ($(e.target).hasClass('modal')) {
+        $('#modal-produto').removeClass('show');
+      }
+    });
+    
+    // Salvar produto (criar ou editar)
+    $('#btn-salvar-produto').click(async function() {
+      try {
+        const nome = $('#nome').val();
+        const descricao = $('#descricao').val();
+        const preco = $('#preco').val();
+        const imagem = $('#imagem').val();
+        const estoque = $('#estoque').val();
+        
+        if (!nome || !descricao || !preco || !estoque) {
+          alert('Preencha todos os campos obrigatórios!');
+          return;
+        }
+        
+        const dados = {
+          nome: nome,
+          descricao: descricao,
+          preco: parseFloat(preco),
+          imagem: imagem || 'https://via.placeholder.com/300',
+          estoque: parseInt(estoque)
+        };
+        
+        if (modoEdicao && idEdicao) {
+          // Editar
+          await apiCall(`/bolos/${idEdicao}`, 'PUT', dados, true);
+          alert('Produto atualizado com sucesso!');
+        } else {
+          // Criar
+          await apiCall('/bolos', 'POST', dados, true);
+          alert('Produto cadastrado com sucesso!');
+        }
+        
+        $('#modal-produto').removeClass('show');
+        carregarProdutos();
+        
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao salvar produto: ' + error.message);
+      }
+    });
+    
+    // Carregar lista de produtos
+    async function carregarProdutos() {
+      try {
+        const produtos = await apiCall('/bolos', 'GET');
+        renderizarTabela(produtos);
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+        alert('Erro ao carregar produtos: ' + error.message);
+      }
+    }
+    
+    // Renderizar tabela
+    function renderizarTabela(produtos) {
+      const tbody = $('#lista-produtos');
+      
+      if (produtos.length === 0) {
+        tbody.html('<tr><td colspan="6" style="text-align:center;">Nenhum produto cadastrado</td></tr>');
+        return;
+      }
+      
+      tbody.html(produtos.map(p => `
+        <tr>
+          <td><img src="${p.imagem}" alt="${p.nome}"></td>
+          <td>${p.nome}</td>
+          <td>${p.descricao.substring(0, 50)}...</td>
+          <td>R$ ${p.preco.toFixed(2).replace('.', ',')}</td>
+          <td>${p.estoque}</td>
+          <td>
+            <div class="btn-actions">
+              <button class="btn-sm btn-editar" onclick="editarProduto('${p.id}')">Editar</button>
+              <button class="btn-sm btn-deletar" onclick="deletarProduto('${p.id}', '${p.nome}')">Excluir</button>
+            </div>
+          </td>
+        </tr>
+      `).join(''));
+    }
+    
+    // Editar produto
+    window.editarProduto = async function(id) {
+      try {
+        const produto = await apiCall(`/bolos/${id}`, 'GET');
+        
+        modoEdicao = true;
+        idEdicao = id;
+        
+        $('#modal-titulo').text('Editar Produto');
+        $('#produto-id').val(id);
+        $('#nome').val(produto.nome);
+        $('#descricao').val(produto.descricao);
+        $('#preco').val(produto.preco);
+        $('#imagem').val(produto.imagem);
+        $('#estoque').val(produto.estoque);
+        
+        $('#modal-produto').addClass('show');
+        
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao carregar produto: ' + error.message);
+      }
+    };
+    
+    // Deletar produto
+    window.deletarProduto = async function(id, nome) {
+      if (!confirm(`Tem certeza que deseja excluir "${nome}"?`)) {
+        return;
+      }
+      
+      try {
+        await apiCall(`/bolos/${id}`, 'DELETE', null, true);
+        alert('Produto excluído com sucesso!');
+        carregarProdutos();
+      } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao excluir produto: ' + error.message);
+      }
+    };
+  </script>
+</body>
+</html>
