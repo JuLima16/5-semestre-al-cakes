@@ -25,13 +25,27 @@
       justify-content: center;
     }
     .modal-content {
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
+      background: rgba(255,255,255,0.96);
+
+      backdrop-filter: blur(10px);
+
+      padding: 2rem;
+
+      border-radius: 24px;
+
       width: 90%;
-      max-width: 600px;
+      max-width: 650px;
+
       max-height: 90vh;
+
       overflow-y: auto;
+
+      border: 1px solid rgba(248, 200, 220, 0.4);
+
+      box-shadow:
+        0 25px 60px rgba(217, 122, 163, 0.18);
+
+      animation: subirModal 0.35s ease;
     }
     .modal-header {
       display: flex;
@@ -50,42 +64,82 @@
     /* Tabela de produtos */
     .tabela-produtos {
       width: 100%;
-      border-collapse: collapse;
+
+      border-collapse: separate;
+      border-spacing: 0 12px;
+
       margin-top: 20px;
     }
     .tabela-produtos th,
     .tabela-produtos td {
-      padding: 12px;
+      padding: 16px;
+
       text-align: left;
-      border-bottom: 1px solid #ddd;
     }
     .tabela-produtos th {
-      background-color: #f8f9fa;
+      background: transparent;
+
+      color: var(--texto-claro);
+
+      font-size: 0.92rem;
       font-weight: 600;
+
+      text-transform: uppercase;
     }
+    .tabela-produtos tbody tr {
+        background: rgba(255,255,255,0.95);
+
+        box-shadow:
+          0 8px 24px rgba(217, 122, 163, 0.08);
+
+        transition: var(--transicao);
+      }
+
+      .tabela-produtos tbody tr:hover {
+        transform: translateY(-3px);
+
+        box-shadow:
+          0 12px 28px rgba(217, 122, 163, 0.14);
+      }
     .tabela-produtos img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
+        width: 70px;
+        height: 70px;
+
+        object-fit: cover;
+
+        border-radius: 16px;
+
+        box-shadow:
+          0 8px 20px rgba(0,0,0,0.08);
+      }
     .btn-actions {
       display: flex;
       gap: 10px;
     }
     .btn-sm {
-      padding: 6px 12px;
-      font-size: 14px;
+      padding: 0.55rem 1rem;
+
+      font-size: 0.85rem;
+      font-weight: 600;
+
       border: none;
-      border-radius: 5px;
+
+      border-radius: 12px;
+
       cursor: pointer;
+
+      transition: var(--transicao);
+    }
+    .btn-editar:hover,
+    .btn-deletar:hover {
+      transform: translateY(-2px);
     }
     .btn-editar {
-      background-color: #ffc107;
+      background-color: #ffc1076c;
       color: #333;
     }
     .btn-deletar {
-      background-color: #dc3545;
+      background-color: #dc354696;
       color: white;
     }
     .btn-novo {
@@ -101,14 +155,41 @@
       <a href="../index.html" class="logo">A&L<span> Cakes</span></a>
       <button class="hamburguer" aria-label="Abrir menu"><span></span><span></span><span></span></button>
       <nav>
-        <ul class="nav-menu">
-          <li><a href="../index.html">Início</a></li>
-          <li><a href="cardapio.html">Cardápio</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="sobre.html">Sobre</a></li>
-          <li><a href="cadastroBolos.html">Admin</a></li>
-          <li><a href="login.html" class="btn-login">Entrar</a></li>
-        </ul>
+<ul class="nav-menu">
+
+  <li>
+    <a href="../index.html">
+      Acessar Site
+    </a>
+  </li>
+
+  <!-- USUÁRIO -->
+  <li class="usuario-navbar">
+
+    <button class="usuario-btn"
+      id="usuario-btn">
+
+      Olá, Admin
+
+    </button>
+
+    <!-- DROPDOWN -->
+    <div class="dropdown-usuario"
+      id="dropdown-usuario">
+
+      <a href="#">
+        Meu Perfil
+      </a>
+
+      <a href="#">
+        Sair
+      </a>
+
+    </div>
+
+  </li>
+
+</ul>
       </nav>
     </div>
   </header>
@@ -185,9 +266,60 @@
       © 2026 A&L Cakes. Todos os direitos reservados. Projeto acadêmico.
     </div>
   </footer>
+
+  <!-- MODAL CARRINHO -->
+<div class="overlay-carrinho" id="overlay-carrinho">
+
+  <div class="modal-carrinho">
+
+    <div class="topo-carrinho">
+      <h2>Seu Carrinho</h2>
+
+      <button class="fechar-carrinho" id="fechar-carrinho">
+        &times;
+      </button>
+    </div>
+
+    <div class="carrinho-itens">
+
+      <!-- ITEM -->
+      <div class="item-carrinho">
+
+        <img src="../images/BoloRedVelvet.jpg" alt="Produto">
+
+        <div class="info-item">
+          <h3>Bolo Red Velvet</h3>
+          <p>R$ 89,90</p>
+        </div>
+
+        <button class="remover-item">
+          Remover
+        </button>
+
+      </div>
+
+
+    </div>
+
+    <div class="rodape-carrinho">
+
+      <div class="total-carrinho">
+        Total: <span>R$ 89,90</span>
+      </div>
+
+      <button class="btn-finalizar">
+        Finalizar Compra
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
   
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="../js/controller.js"></script>
+  <script src="../js/script.js"></script>
   <script>
     let modoEdicao = false;
     let idEdicao = null;
@@ -321,7 +453,7 @@
       }
     };
     
-    // Deletar produto
+    // Deletar produto  
     window.deletarProduto = async function(id, nome) {
       if (!confirm(`Tem certeza que deseja excluir "${nome}"?`)) {
         return;
@@ -336,6 +468,7 @@
         alert('Erro ao excluir produto: ' + error.message);
       }
     };
+
   </script>
 </body>
 </html>

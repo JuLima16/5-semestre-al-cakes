@@ -184,3 +184,36 @@ function configurarAdmin() {
 function validarEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
+
+
+
+
+/* =========================================================
+   DROPDOWN USUÁRIO
+========================================================= */
+
+const usuarioBtn =
+  document.getElementById("usuario-btn");
+
+const dropdownUsuario =
+  document.getElementById("dropdown-usuario");
+
+usuarioBtn.addEventListener("click", () => {
+
+  dropdownUsuario.classList.toggle("ativo");
+
+});
+
+document.addEventListener("click", (e) => {
+
+  if(
+    !usuarioBtn.contains(e.target) &&
+    !dropdownUsuario.contains(e.target)
+  ){
+
+    dropdownUsuario.classList.remove("ativo");
+
+  }
+
+});
+
