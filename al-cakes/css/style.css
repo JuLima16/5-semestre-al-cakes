@@ -300,12 +300,37 @@ img {
    ========================================================= */
 .produtos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+  /* 3 produtos por linha */
+  grid-template-columns: repeat(3, 1fr);
+
   gap: 2rem;
+
+  width: 100%;
+}
+
+/* RESPONSIVO TABLET */
+@media (max-width: 900px) {
+
+  .produtos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+/* RESPONSIVO CELULAR */
+@media (max-width: 600px) {
+
+  .produtos-grid {
+    grid-template-columns: 1fr;
+  }
+
 }
 
 .produto-card {
-  background-color: var(--branco);
+    background-color: var(--branco);
+  width: 100%;
+  min-width: 0;
   border-radius: var(--raio);
   overflow: hidden;
   box-shadow: var(--sombra-leve);
