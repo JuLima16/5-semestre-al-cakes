@@ -71,11 +71,13 @@ function renderizarProduto(produtos) {
 
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
-  const produto = produtos.find((p) => p.id === id) || produtos[0];
 
-  // Mensagem padrão para o WhatsApp
+  // procura produto pelo ID
+  const produto = produtos.find((p) => p.id == id) || produtos[0];
+
+  // mensagem whatsapp
   const msgWhats = encodeURIComponent(
-    'Olá A&L Cakes! Tenho interesse no produto "${produto.nome}" (R$ ${produto.preco.toFixed(2).replace(".", ",")}). Pode me passar mais informações?'
+    `Olá A&L Cakes! Tenho interesse no produto "${produto.nome}" (R$ ${produto.preco.toFixed(2).replace(".", ",")}). Pode me passar mais informações?`
   );
 
   document.title = `${produto.nome} - A&L Cakes`;
@@ -84,11 +86,22 @@ function renderizarProduto(produtos) {
     <div class="produto-detalhe-img" data-animar>
       <img src="${produto.imagem}" alt="${produto.nome}">
     </div>
+
     <div class="produto-detalhe-info" data-animar>
       <h1>${produto.nome}</h1>
-      <span class="preco">R$ ${produto.preco.toFixed(2).replace(".", ",")}</span>
+
+      <span class="preco">
+        R$ ${produto.preco.toFixed(2).replace(".", ",")}
+      </span>
+
       <p>${produto.descricao}</p>
-      <a href="https://wa.me/5511963216219?text=${msgWhats}" target="_blank" rel="noopener" class="btn btn-whatsapp">
+
+      <a
+        href="https://wa.me/5511963216219?text=${msgWhats}"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-whatsapp"
+      >
         💬 Comprar pelo WhatsApp
       </a>
     </div>

@@ -1363,3 +1363,21 @@ img {
 .dropdown-usuario a:hover{
   background: var(--rosa-claro);
 }
+
+/* =========================================================
+   GRID EXCLUSIVA DA HOME
+========================================================= */
+
+.grid-home {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* TABLET */
+@media (max-width: 900px) {
+
+  .grid-home {
+    grid-template-columns: 1fr;
+  }
+
+}
+
