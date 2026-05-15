@@ -381,74 +381,7 @@ img {
   font-size: 1.2rem;
 }
 
-/* =========================================================
-   PÁGINA DO PRODUTO
-   ========================================================= */
-.produto-detalhe {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
-}
 
-.produto-detalhe-img {
-  border-radius: var(--raio);
-  overflow: hidden;
-  box-shadow: var(--sombra-media);
-}
-
-.produto-detalhe-img img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.produto-detalhe-info h1 {
-  font-size: 2.4rem;
-  margin-bottom: 0.5rem;
-}
-
-.produto-detalhe-info .preco {
-  font-size: 1.8rem;
-  display: block;
-  margin: 1rem 0;
-}
-
-.produto-detalhe-info h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--rosa-escuro);
-}
-
-.ingredientes {
-  list-style: none;
-  padding: 0;
-}
-
-.ingredientes li {
-  padding: 0.4rem 0;
-  border-bottom: 1px dashed var(--cinza-borda);
-  color: var(--texto-claro);
-}
-
-.ingredientes li::before {
-  content: "🌸 ";
-  margin-right: 0.4rem;
-}
-
-.btn-whatsapp {
-  background-color: #25d366;
-  color: var(--branco);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 1.5rem;
-}
-
-.btn-whatsapp:hover {
-  background-color: #1ebe5b;
-  color: var(--branco);
-}
 
 /* =========================================================
    BLOG / GALERIA INSTAGRAM
@@ -812,12 +745,11 @@ img {
   }
 
   /* Hero empilha */
-  .hero-grid,
-  .produto-detalhe,
-  .sobre-grid {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
+.hero-grid,
+.sobre-grid {
+  grid-template-columns: 1fr;
+  text-align: center;
+}
 
   .hero-texto h1 {
     font-size: 2.2rem;
@@ -1381,3 +1313,337 @@ img {
 
 }
 
+
+/* =========================================================
+   BOTÃO CLIENTES CADASTRADOS (mesmo padrão do .btn-carrinho)
+========================================================= */
+.btn-clientes {
+  position: relative;
+  background: rgba(248, 200, 220, 0.25);
+  border: 1px solid rgba(217, 122, 163, 0.18);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--texto);
+  transition: var(--transicao);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  margin-left: 0.4rem;
+}
+
+.btn-clientes:hover {
+  transform: translateY(-2px);
+  background: var(--rosa-claro);
+  box-shadow: 0 8px 22px rgba(217, 122, 163, 0.18);
+}
+
+.btn-clientes svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--texto);
+}
+
+/* =========================================================
+   MODAL CLIENTES (segue padrão do carrinho)
+========================================================= */
+.overlay-clientes {
+  position: fixed;
+  inset: 0;
+  background: rgba(58, 42, 51, 0.45);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1.5rem;
+}
+
+.overlay-clientes.ativo {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-clientes {
+  width: 75%;
+  max-width: 900px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 25px 60px rgba(217, 122, 163, 0.18);
+  border: 1px solid rgba(248, 200, 220, 0.4);
+  animation: subirModal 0.35s ease;
+}
+
+.clientes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+}
+
+.cliente-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--bege);
+  border: 1px solid var(--cinza-borda);
+  border-radius: 18px;
+  padding: 1rem 1.2rem;
+  transition: var(--transicao);
+}
+
+.cliente-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-leve);
+}
+
+.cliente-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cliente-info h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+
+.cliente-info p {
+  font-size: 0.88rem;
+  color: var(--texto-claro);
+  margin: 0;
+}
+
+.cliente-info .data-cadastro {
+  color: var(--rosa-escuro);
+  font-weight: 600;
+  font-size: 0.82rem;
+  margin-top: 0.3rem;
+}
+
+.cliente-acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cliente-acoes button {
+  border: none;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transicao);
+  font-family: var(--fonte-texto);
+}
+
+.btn-editar-cliente {
+  background: var(--rosa-suave);
+  color: var(--texto);
+}
+
+.btn-editar-cliente:hover {
+  background: var(--rosa-medio);
+  transform: translateY(-2px);
+}
+
+.btn-excluir-cliente {
+  background: transparent;
+  color: #c47d97;
+  border: 1px solid #e6b9c9;
+}
+
+.btn-excluir-cliente:hover {
+  background: #fdd6d6;
+  color: #a33;
+}
+
+@media (max-width: 768px) {
+  .modal-clientes { width: 100%; padding: 1.4rem; border-radius: 24px; }
+  .cliente-card { flex-direction: column; align-items: flex-start; }
+  .cliente-acoes { width: 100%; justify-content: flex-end; }
+}
+
+
+/* =========================================================
+   NOVO DESIGN - PÁGINA PRODUTO
+========================================================= */
+
+.produto-layout {
+  width: 100%;
+  max-width: 1150px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3rem;
+
+  padding: 2rem 1.5rem 3rem;
+}
+
+.produto-detalhe-img {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+
+  
+}
+
+.produto-detalhe-img img {
+  width: 100%;
+  max-width: 400px;
+
+  height: 400px;
+
+  object-fit: cover;
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 25px 50px rgba(217, 122, 163, 0.18);
+
+  transition: 0.4s ease;
+}
+
+.produto-detalhe-img img:hover {
+  transform: scale(1.02);
+}
+
+.produto-detalhe-info {
+  flex: 1;
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tag-produto {
+  width: fit-content;
+
+  background: var(--rosa-claro);
+
+  color: var(--rosa-escuro);
+
+  padding: 0.5rem 1rem;
+
+  border-radius: 50px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  margin-bottom: 1.3rem;
+}
+
+.produto-detalhe-info h1 {
+  font-size: 2rem;
+
+  line-height: 1.1;
+
+  margin-bottom: 1rem;
+}
+
+.produto-detalhe-info .preco {
+  font-size: 2rem;
+
+  color: var(--rosa-escuro);
+
+  font-weight: 700;
+
+  margin-bottom: 1.5rem;
+}
+
+.descricao-produto {
+  font-size: 1rem;
+
+  line-height: 1.8;
+
+  color: var(--texto-claro);
+
+  margin-bottom: 2rem;
+}
+
+.beneficios-produto {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.8rem;
+
+  margin-bottom: 2.2rem;
+}
+
+.beneficio-item {
+  background: white;
+
+  border: 1px solid var(--cinza-borda);
+
+  border-radius: 14px;
+
+  padding: 0.85rem 1rem;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  box-shadow: var(--sombra-leve);
+}
+
+.btn-whatsapp {
+  width: fit-content;
+
+  padding: 1rem 2rem;
+
+  font-size: 1rem;
+
+  border-radius: 50px;
+}
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .produto-layout {
+    flex-direction: column;
+
+    text-align: center;
+
+    gap: 2.5rem;
+  }
+
+  .produto-detalhe-info {
+    align-items: center;
+  }
+
+  .produto-detalhe-img img {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .produto-detalhe-info h1 {
+    font-size: 2.3rem;
+  }
+
+  .beneficios-produto {
+    width: 100%;
+  }
+
+  .beneficio-item {
+    text-align: center;
+  }
+
+}

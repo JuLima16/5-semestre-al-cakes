@@ -158,38 +158,29 @@
 <ul class="nav-menu">
 
   <li>
-    <a href="../index.html">
-      Acessar Site
-    </a>
+    <a href="../index.html">Acessar Site</a>
+  </li>
+
+  <!-- Botão Clientes Cadastrados (envolvido em <li>) -->
+  <li>
+<button type="button" class="btn-carrinho btn-clientes" id="abrir-clientes" aria-label="Clientes cadastrados" title="Clientes cadastrados">
+  📋
+</button>
+
   </li>
 
   <!-- USUÁRIO -->
   <li class="usuario-navbar">
+    <button class="usuario-btn" id="usuario-btn">Olá, Admin</button>
 
-    <button class="usuario-btn"
-      id="usuario-btn">
-
-      Olá, Admin
-
-    </button>
-
-    <!-- DROPDOWN -->
-    <div class="dropdown-usuario"
-      id="dropdown-usuario">
-
-      <a href="meusdados.html">
-        Meu Perfil
-      </a>
-
-      <a href="#">
-        Sair
-      </a>
-
+    <div class="dropdown-usuario" id="dropdown-usuario">
+      <a href="meusdados.html">Meu Perfil</a>
+      <a href="#">Sair</a>
     </div>
-
   </li>
 
 </ul>
+
       </nav>
     </div>
   </header>
@@ -198,6 +189,10 @@
     <div class="form-container largo">
       <h2>Painel Administrativo</h2>
       <p class="subtitulo">Gerenciar Produtos</p>
+      
+
+
+
       
       <button class="btn btn-novo" id="btn-novo-produto">+ Novo Produto</button>
       
@@ -316,6 +311,52 @@
   </div>
 
 </div>
+
+<!-- MODAL CLIENTES CADASTRADOS -->
+<div class="overlay-clientes" id="overlay-clientes">
+  <div class="modal-clientes">
+    <div class="topo-carrinho">
+      <h2>Clientes Cadastrados</h2>
+      <button class="fechar-carrinho" id="fechar-clientes" aria-label="Fechar">×</button>
+    </div>
+
+    <div class="clientes-lista" id="clientes-lista"></div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR CLIENTE -->
+<div class="overlay-clientes" id="overlay-editar-cliente">
+  <div class="modal-clientes" style="max-width:480px;">
+    <div class="topo-carrinho">
+      <h2>Editar Cliente</h2>
+      <button class="fechar-carrinho" id="fechar-editar-cliente" aria-label="Fechar">×</button>
+    </div>
+
+      <form id="form-editar-cliente">
+        <input type="hidden" id="edit-cliente-id" />
+
+        <div class="campo">
+          <label for="edit-cliente-nome">Nome</label>
+          <input type="text" id="edit-cliente-nome" required />
+        </div>
+
+        <div class="campo">
+          <label for="edit-cliente-email">Email</label>
+          <input type="email" id="edit-cliente-email" required />
+        </div>
+
+        <!-- TROCADO: telefone → senha -->
+        <div class="campo">
+          <label for="edit-cliente-senha">Senha</label>
+          <input type="password" id="edit-cliente-senha" required minlength="6" />
+        </div>
+
+        <button type="submit" class="btn-finalizar">Salvar Alterações</button>
+      </form>
+
+  </div>
+</div>
+
   
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="../js/controller.js"></script>

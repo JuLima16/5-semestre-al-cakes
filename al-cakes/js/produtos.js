@@ -82,19 +82,41 @@ function renderizarProduto(produtos) {
 
   document.title = `${produto.nome} - A&L Cakes`;
 
-  container.innerHTML = `
+container.innerHTML = `
+
+  <div class="produto-layout">
+
     <div class="produto-detalhe-img" data-animar>
       <img src="${produto.imagem}" alt="${produto.nome}">
     </div>
 
     <div class="produto-detalhe-info" data-animar>
+
+      <span class="tag-produto">
+        ✨ Produto artesanal
+      </span>
+
       <h1>${produto.nome}</h1>
 
       <span class="preco">
         R$ ${produto.preco.toFixed(2).replace(".", ",")}
       </span>
 
-      <p>${produto.descricao}</p>
+      <p class="descricao-produto">
+        ${produto.descricao}
+      </p>
+
+      <div class="beneficios-produto">
+
+        <div class="beneficio-item">
+          🚚 Entrega segura
+        </div>
+
+        <div class="beneficio-item">
+          🎂 Ingredientes selecionados
+        </div>
+
+      </div>
 
       <a
         href="https://wa.me/5511963216219?text=${msgWhats}"
@@ -102,8 +124,12 @@ function renderizarProduto(produtos) {
         rel="noopener"
         class="btn btn-whatsapp"
       >
-        💬 Comprar pelo WhatsApp
+        💬 Fazer pedido
       </a>
+
     </div>
-  `;
+
+  </div>
+
+`;
 }

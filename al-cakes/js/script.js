@@ -217,3 +217,123 @@ document.addEventListener("click", (e) => {
 
 });
 
+/* =========================================================
+   CLIENTES CADASTRADOS - CRUD com localStorage
+========================================================= */
+const CLIENTES_KEY = "al_cakes_clientes";
+
+// MOCK ATUALIZADO (sem telefone, com senha)
+const clientesMock = [
+  { id: 1, nome: "Maria Silva",    email: "maria@gmail.com",   senha: "123456", dataCadastro: "10/05/2026" },
+  { id: 2, nome: "Joana Pereira",  email: "joana@gmail.com",   senha: "123456", dataCadastro: "12/05/2026" },
+  { id: 3, nome: "Carla Mendonça", email: "carla@hotmail.com", senha: "123456", dataCadastro: "13/05/2026" }
+];
+
+
+function obterClientes() {
+  const dados = localStorage.getItem(CLIENTES_KEY);
+  if (!dados) {
+    localStorage.setItem(CLIENTES_KEY, JSON.stringify(clientesMock));
+    return [...clientesMock];
+  }
+  return JSON.parse(dados);
+}
+
+function salvarClientes(lista) {
+  localStorage.setItem(CLIENTES_KEY, JSON.stringify(lista));
+}
+
+function abrirModalClientes() {
+  renderizarClientes();
+  document.getElementById("overlay-clientes").classList.add("ativo");
+}
+
+function fecharModalClientes() {
+  document.getElementById("overlay-clientes").classList.remove("ativo");
+}
+
+function renderizarClientes() {
+  const lista = document.getElementById("clientes-lista");
+  if (!lista) return;
+  const clientes = obterClientes();
+
+  if (!clientes.length) {
+    lista.innerHTML = `<p style="text-align:center;color:var(--texto-claro);padding:2rem;">Nenhum cliente cadastrado.</p>`;
+    return;
+  }
+
+  lista.innerHTML = clientes.map(c => `
+    <div class="cliente-card">
+      <div class="cliente-info">
+        <h3>${c.nome}</h3>
+        <p>📧 ${c.email}</p>
+        <p>🔒 ${"•".repeat((c.senha || "").length)}</p>
+        <span class="data-cadastro">Cadastrado em ${c.dataCadastro}</span>
+      </div>
+      <div class="cliente-acoes">
+        <button class="btn-editar-cliente" data-id="${c.id}">Editar</button>
+        <button class="btn-excluir-cliente" data-id="${c.id}">Excluir</button>
+      </div>
+    </div>
+  `).join("");
+
+  lista.querySelectorAll(".btn-editar-cliente").forEach(b =>
+    b.addEventListener("click", () => abrirEditarCliente(Number(b.dataset.id)))
+  );
+  lista.querySelectorAll(".btn-excluir-cliente").forEach(b =>
+    b.addEventListener("click", () => excluirCliente(Number(b.dataset.id)))
+  );
+}
+
+
+function abrirEditarCliente(id) {
+  const c = obterClientes().find(x => x.id === id);
+  if (!c) return;
+  document.getElementById("edit-cliente-id").value    = c.id;
+  document.getElementById("edit-cliente-nome").value  = c.nome;
+  document.getElementById("edit-cliente-email").value = c.email;
+  document.getElementById("edit-cliente-senha").value = c.senha;
+  document.getElementById("overlay-editar-cliente").classList.add("ativo");
+}
+
+
+function fecharEditarCliente() {
+  document.getElementById("overlay-editar-cliente").classList.remove("ativo");
+}
+
+function salvarEdicaoCliente(e) {
+  e.preventDefault();
+  const id = Number(document.getElementById("edit-cliente-id").value);
+  const lista = obterClientes().map(c =>
+    c.id === id ? {
+      ...c,
+      nome:  document.getElementById("edit-cliente-nome").value.trim(),
+      email: document.getElementById("edit-cliente-email").value.trim(),
+      senha: document.getElementById("edit-cliente-senha").value
+    } : c
+  );
+  salvarClientes(lista);
+  fecharEditarCliente();
+  renderizarClientes();
+}
+
+
+function excluirCliente(id) {
+  if (!confirm("Deseja realmente excluir este cliente?")) return;
+  salvarClientes(obterClientes().filter(c => c.id !== id));
+  renderizarClientes();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("abrir-clientes")?.addEventListener("click", abrirModalClientes);
+  document.getElementById("fechar-clientes")?.addEventListener("click", fecharModalClientes);
+  document.getElementById("overlay-clientes")?.addEventListener("click", e => {
+    if (e.target.id === "overlay-clientes") fecharModalClientes();
+  });
+
+  document.getElementById("fechar-editar-cliente")?.addEventListener("click", fecharEditarCliente);
+  document.getElementById("overlay-editar-cliente")?.addEventListener("click", e => {
+    if (e.target.id === "overlay-editar-cliente") fecharEditarCliente();
+  });
+  document.getElementById("form-editar-cliente")?.addEventListener("submit", salvarEdicaoCliente);
+});
